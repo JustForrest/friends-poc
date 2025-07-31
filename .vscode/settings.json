@@ -1,0 +1,29 @@
+{
+  // --- Python Settings ---
+  "python.defaultInterpreterPath": "./venv/bin/python",
+  "python.analysis.typeCheckingMode": "basic",
+
+  // --- Formatting & Linting ---
+  "editor.formatOnSave": true,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+  "[javascript][typescript][typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // --- File Exclusions ---
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "__pycache__": true,
+    "**/.pytest_cache": true
+  }
+}
