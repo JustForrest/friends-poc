@@ -5,8 +5,8 @@ Author: [Your Name/Team Name]
 Last Updated: July 31, 2024
 
 1. Overview
-1.1. Background
-Unagi is an internal research and development project designed to explore the capabilities of modern AI technologies on a well-defined, closed-domain dataset. The project leverages the complete script archive of the TV show "Friends" to build a conversational AI system. This PoC serves as a foundational step toward developing more complex, agentic AI systems on local hardware, providing a controlled environment to test and refine our data processing pipelines, LLM interactions, and application architecture.
+   1.1. Background
+   Unagi is an internal research and development project designed to explore the capabilities of modern AI technologies on a well-defined, closed-domain dataset. The project leverages the complete script archive of the TV show "Friends" to build a conversational AI system. This PoC serves as a foundational step toward developing more complex, agentic AI systems on local hardware, providing a controlled environment to test and refine our data processing pipelines, LLM interactions, and application architecture.
 
 1.2. Problem Statement
 Businesses need a robust, end-to-end Retrieval-Augmented Generation (RAG) system that can be built and deployed locally. This system must handle the entire lifecycle of a RAG application: ingesting and processing raw text data, embedding it into a vector store, serving it via a high-performance API, and interacting with it through a clean, modern web interface. The goal is to create a tangible, working application that demonstrates our ability to build and manage sophisticated AI systems in-house.
@@ -15,8 +15,8 @@ Businesses need a robust, end-to-end Retrieval-Augmented Generation (RAG) system
 The purpose of this document is to define the scope, features, and requirements for Unagi. It will serve as the central source of truth for the development team, ensuring alignment on goals, technical specifications, and success criteria throughout the project lifecycle. This PRD will be managed in conjunction with our project tracking in Linear.
 
 2. Goals and Objectives
-2.1. Business & Technical Goals
-Develop In-House Expertise: Build institutional knowledge and hands-on experience in creating, deploying, and managing local RAG systems.
+   2.1. Business & Technical Goals
+   Develop In-House Expertise: Build institutional knowledge and hands-on experience in creating, deploying, and managing local RAG systems.
 
 Create a Reusable Blueprint: Establish a well-documented, containerized architecture that can serve as a template for future RAG projects.
 
@@ -41,8 +41,8 @@ API Performance: The p95 (95th percentile) response time for queries to the RAG 
 Qualitative Feedback: Positive feedback from internal testers regarding the accuracy and relevance of the AI's answers.
 
 3. User Personas and Scenarios
-3.1. Personas
-Alex, the AI Engineer:
+   3.1. Personas
+   Alex, the AI Engineer:
 
 Role: Backend developer, AI/ML enthusiast.
 
@@ -70,8 +70,8 @@ As Sam, I want to ask a specific question like "What was the name of Ross's monk
 As Sam, I want to ask a more open-ended question like "Summarize the conflict between Ross and Rachel in Season 3" and receive a coherent summary, so that I can assess the system's ability to synthesize information.
 
 4. Features and Requirements
-4.1. Data Ingestion Pipeline
-Data Source: The system must ingest all text-based scripts from the Emory NLP GitHub repository.
+   4.1. Data Ingestion Pipeline
+   Data Source: The system must ingest all text-based scripts from the Emory NLP GitHub repository.
 
 Preprocessing: A Python script must be created to clean the raw text, removing metadata, scene directions, and standardizing character names.
 
@@ -121,7 +121,7 @@ Orchestration: A docker-compose.yml file must be created to define and run all a
 Configuration: All sensitive information (API keys, etc.) and environment-specific settings must be managed via .env files.
 
 5. Out of Scope
-The following features and functionalities are explicitly out of scope for this Proof-of-Concept to ensure focus on the core objectives. They may be considered for future versions.
+   The following features and functionalities are explicitly out of scope for this Proof-of-Concept to ensure focus on the core objectives. They may be considered for future versions.
 
 UI-based Hyperparameter Tuning: The web interface will not include sliders or controls for adjusting RAG parameters (e.g., number of documents retrieved, LLM temperature). These will be configurable only in the backend code or environment variables.
 
