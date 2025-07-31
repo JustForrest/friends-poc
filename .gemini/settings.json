@@ -1,0 +1,7 @@
+{
+  "sandbox": "docker",
+  "fileFiltering": {
+    "respectGitIgnore": true
+  },
+  "autoAccept": false
+}
