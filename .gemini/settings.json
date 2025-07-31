@@ -3,5 +3,8 @@
   "fileFiltering": {
     "respectGitIgnore": true
   },
-  "autoAccept": false
+  "autoAccept": false,
+  "checkpointing": {
+    "enabled": true
+  }
 }

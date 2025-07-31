@@ -1,11 +1,11 @@
-# Project: Friends RAG PoC
+# Project: Unagi
 
 ## 1. Project Goal
 This project is a Proof-of-Concept (PoC) to build a Retrieval-Augmented Generation (RAG) system using scripts from the "Friends" TV show. The primary goal is a functional web application that allows a user to ask questions and get answers based on the show's dialogue.
 
-The application will run locally, and the final output should be containerized with Docker.
+**The full Product Requirements Document (PRD) can be found in `UNAGI_PRD.md`. Refer to it for detailed features and requirements.**
 
-**GitHub Repository:** https://github.com/your-repo
+**GitHub Repository:** https://github.com/JustForrest/friends-poc
 
 ## 2. Tech Stack
 - **Backend:** Python with FastAPI
