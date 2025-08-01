@@ -1,0 +1,21 @@
+{
+  "disabled": [
+    "projects.add-item-to-project",
+    "projects.close-project",
+    "projects.copy-project",
+    "projects.create-project",
+    "projects.delete-project",
+    "projects.delete-project-item",
+    "projects.get-project",
+    "projects.get-projects",
+    "projects.reopen-project",
+    "projects.update-project",
+    "projects.update-project-item",
+    "discussions.create-discussion",
+    "discussions.delete-discussion",
+    "discussions.get-discussion",
+    "discussions.get-discussions",
+    "discussions.update-discussion",
+    "dependabot.get-alerts"
+  ]
+}
