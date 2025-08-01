@@ -21,7 +21,7 @@ This project is a Proof-of-Concept (PoC) to build a Retrieval-Augmented Generati
 
 To ensure consistency, the project uses specific VS Code extensions to enforce code style and quality. When generating or modifying code, adhere to the standards enforced by these tools:
 
-- **`ms-python.black-formatter`**: All Python code must be formatted with the Black code formatter.
+- **`charliermarsh.ruff`**: All Python code must be formatted and linted with Ruff.
 - **`dbaeumer.vscode-eslint`**: All JavaScript/TypeScript code must adhere to ESLint rules.
 - **`ms-azuretools.vscode-docker`**: The project uses Docker for services like Qdrant. Be prepared to create and modify `Dockerfile` and `docker-compose.yml` files.
 
@@ -42,7 +42,7 @@ To make issues easy for Linear's AI Agents to process, all suggested or drafted 
 
 ## 5. Core Instructions
 
-- All Python code must be typed and follow PEP 8 standards, and be formatted with Black.
+- All Python code must be typed and follow PEP 8 standards, and be formatted with Ruff.
 - FastAPI endpoints should use Pydantic models for request and response validation.
 - The RAG chain logic should be modular and easy to understand.
 - Prioritize asynchronous (`async`) methods in the FastAPI backend for performance.
