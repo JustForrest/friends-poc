@@ -6,17 +6,8 @@
 	],
 	"settings": {
 		"mcp": {
-			"servers": {
-				"linear-mcp-server-e6338bd2": {
-					"type": "stdio",
-					"command": "npx",
-					"args": [
-						"mcp-remote",
-						"https://mcp.linear.app/sse"
-					]
-				}
-			},
-			"inputs": []
+			"inputs": [],
+			"servers": {}
 		}
 	}
 }
