@@ -6,7 +6,7 @@ This project is a Proof-of-Concept (PoC) to build a Retrieval-Augmented Generati
 
 **The full Product Requirements Document (PRD) can be found in `UNAGI_PRD.md`. Refer to it for detailed features and requirements.**
 
-**GitHub Repository:** https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository
+**GitHub Repository:** https://github.com/JustForrest/friends-poc
 
 ## 2. Tech Stack
 
