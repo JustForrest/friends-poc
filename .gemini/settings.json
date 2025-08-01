@@ -6,5 +6,6 @@
   "autoAccept": false,
   "checkpointing": {
     "enabled": true
-  }
+  },
+  "editor": "code"
 }
