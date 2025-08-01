@@ -25,5 +25,15 @@
     "**/Thumbs.db": true,
     "__pycache__": true,
     "**/.pytest_cache": true
+  },
+  "chat.mcp.serverSampling": {
+    "friends-poc/.vscode/mcp.json: my-mcp-server-d2fe98c8": {
+      "allowedModels": [
+        "github.copilot-chat/gpt-4.1",
+        "github.copilot-chat/claude-3.5-sonnet",
+        "github.copilot-chat/gemini-2.0-flash-001",
+        "github.copilot-chat/Gemini-models/gemini-2.5-pro-preview-03-25"
+      ]
+    }
   }
 }
