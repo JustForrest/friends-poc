@@ -1,16 +1,16 @@
 {
-    "recommendations": [
-        // Core Python support
-        "ms-python.python",
-        "ms-python.black-formatter",
-        // Core JS/TS support
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        // Docker integration
-        "ms-azuretools.vscode-docker",
-        // Git integration
-        "eamodio.gitlens",
-        // Environment file syntax highlighting
-        "ms-azuretools.vscode-bicep"
-    ]
+  "recommendations": [
+    // Core Python support
+    "ms-python.python",
+    "charliermarsh.ruff", // <-- Added Ruff
+    // Core JS/TS support
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    // Docker integration
+    "ms-azuretools.vscode-docker",
+    // Git integration
+    "eamodio.gitlens",
+    // Environment file syntax highlighting
+    "ms-azuretools.vscode-bicep"
+  ]
 }
