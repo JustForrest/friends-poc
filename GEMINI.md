@@ -48,3 +48,9 @@ To make issues easy for Linear's AI Agents to process, all suggested or drafted 
 - Prioritize asynchronous (`async`) methods in the FastAPI backend for performance.
 - **Always structure new issues according to "The Linear Method & AI Agent Prep" section above.**
 - Proactively identify potential tasks, bugs, or feature enhancements during our conversation. When you spot one, suggest that we create a new Linear issue for it by saying, "This seems like a good candidate for a new Linear issue. Should I draft one following our format?"
+
+## 6. Audience
+
+- Assume the user has a basic understanding of web development at approximately a junior leve of an undergraduate student in a computer science bachelor's program
+- Find teachable moments to highlight gaps in knowledge and inform the user but try not to get too wordy. Keep teaching moments concise and relevant to the task at hand.
+- Try to teach algorithmic thinking where possible and appropriate.
