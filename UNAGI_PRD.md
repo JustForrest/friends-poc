@@ -1,12 +1,14 @@
 Product Requirements Document: Unagi
-Version: 1.0
+Version: 1.2
 Status: Draft
 Author: [Your Name/Team Name]
-Last Updated: July 31, 2024
+Last Updated: August 01, 2025
 
 1. Overview
    1.1. Background
-   Unagi is an internal research and development project designed to explore the capabilities of modern AI technologies on a well-defined, closed-domain dataset. The project leverages the complete script archive of the TV show "Friends" to build a conversational AI system. This PoC serves as a foundational step toward developing more complex, agentic AI systems on local hardware, providing a controlled environment to test and refine our data processing pipelines, LLM interactions, and application architecture.
+   Unagi is an internal research and development project designed to explore the capabilities of modern AI technologies on a well-defined, closed-domain dataset. The project is specifically targeted to run on the NVIDIA DGX Spark platform, leveraging its Grace Blackwell architecture and 128GB of unified memory to power demanding AI workloads locally.
+
+The project uses the complete script archive of the TV show "Friends" to build a conversational AI system, serving as a foundational step toward developing more complex, agentic AI systems in-house.
 
 1.2. Problem Statement
 Businesses need a robust, end-to-end Retrieval-Augmented Generation (RAG) system that can be built and deployed locally. This system must handle the entire lifecycle of a RAG application: ingesting and processing raw text data, embedding it into a vector store, serving it via a high-performance API, and interacting with it through a clean, modern web interface. The goal is to create a tangible, working application that demonstrates our ability to build and manage sophisticated AI systems in-house.
@@ -20,7 +22,7 @@ The purpose of this document is to define the scope, features, and requirements 
 
 Create a Reusable Blueprint: Establish a well-documented, containerized architecture that can serve as a template for future RAG projects.
 
-Evaluate Local LLM Performance: Assess the suitability and performance of the Llama 3.1 70B model for a specific, real-world RAG task.
+Evaluate NVIDIA-Optimized LLM Performance: Assess the performance and suitability of the NVIDIA Llama-3.3-Nemotron-Super-49B-v1.5 model, leveraging the hardware-software synergy of running an NVIDIA-optimized model on the DGX Spark platform.
 
 Validate Development Tooling: Test and confirm the effectiveness of using the Gemini CLI as a development accelerator for AI application engineering.
 
@@ -29,7 +31,7 @@ Functional MVP: Deliver a working web application that allows authenticated user
 
 High-Quality Responses: Ensure the AI's responses are contextually relevant, factually grounded in the provided scripts, and free of hallucinations.
 
-Performant User Experience: Provide a responsive user interface with low-latency answers to user queries.
+Performant User Experience: Provide a responsive user interface with low-latency answers to user queries, maximized by the optimized model-hardware pairing.
 
 2.3. Success Metrics
 Project Completion: All defined issues in the "Unagi" Linear project are completed within the planned cycles.
@@ -86,20 +88,22 @@ Query Endpoint: The API must provide a /query endpoint (POST method) that accept
 
 Request Validation: The endpoint must use a Pydantic model to validate that the incoming request contains a non-empty string field named query.
 
-RAG Core Logic: Upon receiving a valid query, the backend will:
+RAG Core Logic: Upon receiving a valid query, the backend will use LangChain's official Qdrant vector store integration to:
 
 Embed the user's query into a vector.
 
 Use the query vector to search Qdrant for the most relevant text chunks.
 
-Pass the retrieved chunks and the original query to the Llama 3.1 70B model via a formatted prompt.
+Pass the retrieved chunks and the original query to the NVIDIA Llama-3.3-Nemotron-Super-49B-v1.5 model via a formatted prompt.
 
 Return the LLM's generated response as a JSON object.
 
 Health Check: A simple /health endpoint (GET method) must be included that returns a 200 OK status to indicate the service is running.
 
+CORS Configuration: The API must implement FastAPI's CORSMiddleware to allow requests from the Next.js frontend's origin during development.
+
 4.3. Frontend Web Application (Next.js)
-User Authentication: The application must use Clerk for user sign-up, sign-in, and session management. Access to the chat interface must be restricted to authenticated users.
+User Authentication: The application must use Clerk's official @clerk/nextjs library. Clerk's middleware must be configured to protect all application pages and backend API routes, redirecting unauthenticated users to a sign-in page.
 
 Chat Interface: A clean, simple interface will be built, consisting of:
 
@@ -120,6 +124,8 @@ Orchestration: A docker-compose.yml file must be created to define and run all a
 
 Configuration: All sensitive information (API keys, etc.) and environment-specific settings must be managed via .env files.
 
+Linter & Formatter Configuration: A pyproject.toml file must be created and maintained in the project root to configure all rules for the Ruff linter and formatter.
+
 5. Out of Scope
    The following features and functionalities are explicitly out of scope for this Proof-of-Concept to ensure focus on the core objectives. They may be considered for future versions.
 
@@ -131,4 +137,4 @@ Multi-User Chat: The application will not support real-time collaboration or sha
 
 Advanced Data Analysis: The PoC will not include a dashboard or analytics for evaluating retrieval quality or LLM performance.
 
-Support for Multiple LLMs: The system will be built specifically for the Llama 3.1 70B model and will not include a mechanism for swapping to other models.
+Comparative Model Benchmarking: While we are using the Nemotron model for its performance benefits, a direct, quantitative performance comparison against other models (e.g., Llama 3.1 70B) is not a goal for this project.
