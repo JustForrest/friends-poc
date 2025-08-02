@@ -12,7 +12,9 @@
 					"command": "npx",
 					"args": [
 						"mcp-remote",
-						"https://mcp.linear.app/sse"
+						"https://mcp.linear.app/sse",
+						"--organization",
+						"unagi-app"
 					]
 				}
 			},
