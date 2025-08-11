@@ -1,70 +1,60 @@
-Project: Unagi
+# Gemini CLI Instructions for Unagi Project
 
-1. Project Goal
-   This project is a Proof-of-Concept (PoC) to build a Retrieval-Augmented Generation (RAG) system using scripts from the "Friends" TV show. The primary goal is a functional web application that allows a user to ask questions and get answers based on the show's dialogue.
+## Project Context
 
-The full Product Requirements Document (PRD) can be found in UNAGI_PRD.md. Refer to it for detailed features and requirements.
+- **Unagi**: Internal RAG system on "Friends" scripts. Agent-first dev: Goose for planning/reads/recipes; Gemini CLI for writes/executions/extensions. Prioritize Goose recipes for repeatable tasks.
+- **Tech Stack**: The project heavily employs Python for backend logic, data processing, and scripts, with Ruff as the formatter for all Python code. Frontend is built with Next.js, adhering to recommended project structure for optimal organization and performance.
 
-GitHub Repository: https://github.com/JustForrest/friends-poc
+## Goose High-Level Overview
 
-2. Tech Stack
-   Target Platform: NVIDIA DGX Spark
+- **Architecture**: LLM-driven agent (e.g., Grok-4 lead). Tool-calling for dynamic invocation. MCP extensions for tools/data. Recipes: YAML workflows automating sequences (prompts, tools, sub-tasks). Sub-recipes: Nested/parallel execution. Goosehints: Context files for guidance.
+- **Recipes**: YAML with steps (prompt, tool_call, sub_recipe). Session recipes for interactive. Run via CLI (goose recipe run). Use for code gen, debugging, pipelines. Parallel sub-recipes for efficiency (e.g., concurrent embeddings).
+- **Best Practices**: Delegate repeatable/parallel tasks to recipes. Integrate with Gemini CLI for hybrid flows.
 
-LLM: NVIDIA Llama-3.3-Nemotron-Super-49B-v1.5
+## Recipe Opportunity Detection
 
-Backend: Python with FastAPI
+- **Scan For**: Repeatable coding tasks (e.g., data ingestion, code patterns, testing, integrations) suitable for agent delegation/parallelism.
+- **Notify**: If detected, respond: "Opportunity for Goose recipe: [Task description]. Suggested YAML: [Concise sketch]. Proceed?"
+- **Examples**: "Embed chunks" → Recipe with parallel sub-recipes. "Generate API" → Tool-calling recipe.
 
-Vector DB: Qdrant (running via Docker)
+## GitHub Issues and Projects Overview
 
-Frontend: Next.js
+- **Issues**: Track work (tasks/bugs/features). Fields: Title, Body, Assignees, Labels, Milestones, State (open/closed). Link to PRs/Projects.
+- **Projects**: Organize issues/PRs in views (board/table/roadmap). Custom fields (e.g., Status, Priority). Automate via GitHub Actions (YAML workflows on events; auth with PAT/App).
+- **Best Practices**: Use labels/milestones for organization. Automate updates (e.g., issue close → status change). Link to Unagi repo for tracking.
 
-Authentication: Clerk
+## Gemini CLI Specifics
 
-Orchestration: LangChain
-
-3. Development Environment & Tooling
-   To ensure consistency, the project uses specific VS Code extensions to enforce code style and quality. When generating or modifying code, adhere to the standards enforced by these tools:
-
-charliermarsh.ruff: All Python code must be formatted and linted with Ruff.
-
-dbaeumer.vscode-eslint: All JavaScript/TypeScript code must adhere to ESLint rules.
-
-ms-azuretools.vscode-docker: The project uses Docker for services like Qdrant. Be prepared to create and modify Dockerfile and docker-compose.yml files.
-
-4. The Linear Method & AI Agent Prep
-   To ensure our project is well-organized and prepared for automation, all work must adhere to Linear's conceptual model.
-
-Work is an Issue: Everything we do is captured as an issue, which represents a single piece of work.
-
-Issues Have a Lifecycle: An issue moves through a clear lifecycle: Triage -> Backlog -> Todo -> In Progress -> Done.
-
-Cycles for Momentum: We organize our work into Cycles (sprints) to maintain momentum and focus on a small batch of issues at a time.
-
-Projects for Goals: Our "Unagi" Project is the high-level goal that all our issues and cycles contribute to.
-
-Issue Creation Format for AI:
-To make issues easy for Linear's AI Agents to process, all suggested or drafted issues should follow this format:
-
-Clear, Action-Oriented Title: The title should be a command (e.g., "Build the data ingestion script," not "Data script").
-
-Structured Description: The description should include sections for Background, Acceptance Criteria, and Technical Approach. This structure provides rich context for AI autofill and triage features.
-
-5. Core Instructions
-   All Python code must be typed and follow PEP 8 standards, and be formatted with Ruff.
-
-FastAPI endpoints should use Pydantic models for request and response validation.
-
-The RAG chain logic should be modular and easy to understand.
-
-Prioritize asynchronous (async) methods in the FastAPI backend for performance.
-
-Always structure new issues according to "The Linear Method & AI Agent Prep" section above.
-
-Proactively identify potential tasks, bugs, or feature enhancements during our conversation. When you spot one, suggest that we create a new Linear issue for it by saying, "This seems like a good candidate for a new Linear issue. Should I draft one following our format?"
-
-6. Audience
-   Assume the user has a basic understanding of web development at approximately a junior level of an undergraduate student in a computer science bachelor's program
-
-Find teachable moments to highlight gaps in knowledge and inform the user but try not to get too wordy. Keep teaching moments concise and relevant to the task at hand.
-
-Try to teach algorithmic thinking where possible and appropriate.
+- **Config**: Hierarchical context files for instructions. Ignore via .gemini-ignore patterns.
+- **Behavior**: Concise responses. For repo/code interactions: Suggest Goose recipes first for agentic tasks; execute writes via CLI/extensions. Alert on Goose opportunities.
+- **Code Formatting and Best Practices**:
+  - **Python Code (Ruff Formatter)**: All Python code must adhere to Ruff's formatting rules for consistency and readability. Ruff is the designated formatter, enforcing PEP 8 standards with some sensible defaults. Key guidelines:
+    - **Configuration**: Use `pyproject.toml` for settings (e.g., line-length=88, target-version=py39). Install Ruff via `pip install ruff` and integrate into CI/CD for automatic checks.
+    - **Formatting Rules**:
+      - Line length: Default 88 characters; avoid exceeding unless necessary (e.g., for URLs or long strings).
+      - Quotes: Use double quotes for strings by default; single quotes for nested or docstrings if needed.
+      - Indentation: 4 spaces; no tabs.
+      - Imports: Sorted alphabetically; separate stdlib, third-party, and local imports. Use `isort` integration if enabled.
+      - Whitespace: No trailing whitespace; single blank line between functions/classes; two between top-level elements.
+      - Black Compatibility: Ruff aims for Black-like formatting; enable `black` compatibility mode if stricter adherence is needed.
+    - **Usage**: Run `ruff format` on all Python files before commits. For linting, use `ruff check --fix`. Prioritize Ruff over other formatters (e.g., Black) for speed and integration.
+    - **Best Practices**: Write idiomatic Python; use type hints (PEP 484); avoid unnecessary complexity. For Unagi-specific tasks like data ingestion or RAG pipelines, ensure scripts are modular and testable.
+  - **Next.js Code (Project Structure and Best Practices)**: Follow Next.js recommended project structure to maintain scalability, especially for the frontend components of Unagi. This ensures clear separation of concerns and optimal performance.
+    - **Recommended Directory Structure**:
+      - `app/`: Core of the App Router; contains routes, pages, and layouts (e.g., `app/page.tsx` for root page, `app/api/` for API routes).
+      - `components/`: Reusable UI components (e.g., buttons, modals); keep them pure and stateless where possible.
+      - `lib/`: Utility functions, data fetching logic, database connections, or shared hooks (e.g., `lib/db.ts` for database utilities).
+      - `public/`: Static assets like images, fonts, or favicons; served directly (e.g., `public/images/logo.png`).
+      - `scripts/`: One-off or build-time scripts (e.g., data seeding or migrations).
+      - Root files: `next.config.js` for configuration, `package.json` for dependencies, `.env` for environment variables, `tsconfig.json` for TypeScript settings.
+      - Optional: `styles/` for global CSS, `types/` for custom TypeScript types, `tests/` for unit/integration tests.
+    - **Best Practices**:
+      - Use the App Router for new features; prefer Server Components for data fetching to reduce client bundle size.
+      - Colocate files: Keep related files (e.g., components, hooks) near their usage in `app/` subdirectories.
+      - Performance: Leverage Next.js features like dynamic imports, image optimization, and caching. Avoid large client-side bundles.
+      - TypeScript: Strongly encouraged; use interfaces for props and state.
+      - Styling: Use CSS Modules or Tailwind CSS for scoped styles; avoid global CSS unless necessary.
+      - Testing: Integrate Jest or React Testing Library in `tests/`.
+      - For Unagi: Structure RAG-related frontend (e.g., query interfaces) in `app/rag/`, with shared components in `components/`. Ensure API routes in `app/api/` handle backend integrations securely.
+    - **Formatting**: While Next.js doesn't enforce a formatter, align with ESLint/Prettier for JS/TS code. Run `npm run lint` and `npm run format` in workflows.
+- **Integration with Goose**: When generating or modifying code, suggest recipes that enforce these standards (e.g., a recipe to format Python files with Ruff or validate Next.js structure). For writes/executions via Gemini CLI, always apply formatting post-generation.
