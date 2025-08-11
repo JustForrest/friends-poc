@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  unagi-dev:
+    image: python:3.11-slim  # Or python:3.13-slim for newer Python
+    platform: linux/arm64  # Ensure native Apple Silicon performance
+    volumes:
+      - .:/workspace:cached  # Mount project for live editing
+      - ~/.config:/home/user/.config  # For global configs (e.g., Goose memory)
+    environment:
+      - GITHUB_PERSONAL_ACCESS_TOKEN=your_read_only_pat_here  # For Goose config
+      - MCP_SERVER_URI=http://mcp-github:3000  # Point Goose to local MCP
+    cap_drop:
+      - ALL  # Security: Drop all capabilities
+    cap_add:
+      - NET_BIND_SERVICE  # If needed for ports
+    depends_on:
+      - mcp-github  # Ensure MCP starts first
+    command: sleep infinity  # Keep container running for VS Code Remote
+
+  mcp-github:  # New service for MCP server
+    image: mcp/github  # Built from the repo above
+    platform: linux/arm64
+    environment:
+      - GITHUB_PERSONAL_ACCESS_TOKEN=your_read_only_pat_here  # PAT for MCP
+      - PORT=3000  # Or whatever port the server uses (check README)
+    healthcheck:  # Ensure it's ready
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]  # Adjust if needed
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    cap_drop:
+      - ALL  # High security

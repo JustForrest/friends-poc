@@ -1,0 +1,25 @@
+{
+  "name": "Unagi Dev",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "unagi-dev",
+  "workspaceFolder": "/workspace",
+  "extensions": [
+    "ms-python.python",  // Must-have
+    "charliermarsh.ruff",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "github.copilot"  // And others from our list
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "black",
+    "[python]": { "editor.defaultFormatter": "ms-python.black-formatter" },
+    "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" }
+  },
+  "postCreateCommand": [
+    "pip install -r requirements.txt",  // Install deps
+    "echo '[extensions]' > /workspace/.goose/config.toml && echo 'github-mcp = true' >> /workspace/.goose/config.toml",  // Enable extension
+    "echo '[github-mcp]' >> /workspace/.goose/config.toml && echo 'uri = \"http://mcp-github:3000\"' >> /workspace/.goose/config.toml && echo 'token = \"$GITHUB_PERSONAL_ACCESS_TOKEN\"' >> /workspace/.goose/config.toml",  // Local MCP config
+    "uname -m"  // Verify arm64
+  ]
+}
