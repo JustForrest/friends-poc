@@ -1,0 +1,54 @@
+# .geminiignore for Unagi Project
+# Based on https://github.com/google-gemini/gemini-cli/blob/main/docs/gemini-ignore.md
+# Ignores sensitive files, build artifacts, logs, and large/irrelevant items for efficient AI context.
+
+# Sensitive files (e.g., secrets, env vars)
+.env
+*.env.*
+secrets/
+.github/secrets  # If you have a secrets dir for GitHub Actions/PATs
+clerk-keys.json  # Example for Clerk auth keys
+
+# Build and dependency artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+node_modules/
+npm-debug.log
+yarn-error.log
+/dist/
+/build/
+
+# Logs and temporary files (common in container runs)
+*.log
+*.tmp
+temp/
+.goose/logs/  # Goose execution logs
+.gemini/cache/  # Gemini CLI cache if present
+
+# Git and version control
+.git/
+.gitignore
+.gitattributes
+
+# Docker/container-specific ignores (avoid scanning build files unless needed)
+Dockerfile*
+docker-compose.*.yml  # Ignore overrides or backups; keep main docker-compose.yml if useful for context
+.devcontainer/  # If you don't want devcontainer configs in AI scans (but consider keeping for Copilot synergy)
+
+# Large data files (e.g., embeddings, scripts – assume they're handled separately)
+data/chunks/
+data/embeddings/
+friends-scripts/raw/  # Raw TV scripts if large; include processed ones if relevant
+
+# Other project-specific ignores
+.vscode/settings.json  # If it contains personal configs
+tests/__snapshots__/
+coverage/
+
+# Exceptions (un-ignore if needed, e.g., important docs)
+!README.md
+!UNAGI_PRD.md
+!.goose/config.toml  # Keep Goose config for AI awareness
+!.gemini/settings.json  # Keep Gemini settings for self-reference
