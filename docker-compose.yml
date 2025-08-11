@@ -2,35 +2,25 @@ version: '3.8'
 
 services:
   unagi-dev:
-    image: python:3.11-slim  # Or python:3.13-slim for newer Python
-    platform: linux/arm64  # Ensure native Apple Silicon performance
-    volumes:
-      - .:/workspace:cached  # Mount project for live editing
-      - ~/.config:/home/user/.config  # For global configs (e.g., Goose memory)
-    environment:
-      - GITHUB_PERSONAL_ACCESS_TOKEN="${UNAGI_DEV_PAT}"  # For Goose config
-      - MCP_SERVER_URI=http://mcp-github:3000  # Point Goose to local MCP
-    cap_drop:
-      - ALL  # Security: Drop all capabilities
-    cap_add:
-      - NET_BIND_SERVICE  # If needed for ports
-    depends_on:
-      - mcp-github  # Ensure MCP starts first
-    command: sleep infinity  # Keep container running for VS Code Remote
-
-  mcp-github:  # New service for MCP server
     build:
-      context: ./mcp-server  # Path to cloned repo
-      dockerfile: src/github/Dockerfile  # From the repo's structure
-    image: mcp/github:local  # Tag it locally
-    platform: linux/arm64
+      context: .
+      dockerfile: Dockerfile  # Your existing Goose/Gemini CLI Dockerfile (python:3.11-slim base)
+    volumes:
+      - .:/workspace
     environment:
-      - GITHUB_PERSONAL_ACCESS_TOKEN="${MCP_PAT}"  # PAT for MCP
-      - PORT=3000  # Or whatever port the server uses (check README)
-    healthcheck:  # Ensure it's ready
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]  # Adjust if needed
-      interval: 10s
-      timeout: 5s
-      retries: 3
-    cap_drop:
-      - ALL  # High security
+      - GOOSE_DEFAULT_PROVIDER=grok
+      - GITHUB_PAT=${GITHUB_PAT}  # Read-only PAT from your env
+    platform: linux/arm64  # Ensure native Apple Silicon performance
+
+  mcp-server:
+    build:
+      context: https://github.com/docker/mcp-servers.git
+      dockerfile: src/github/Dockerfile  # Assumes there's a Dockerfile in that path (based on repo structure)
+    environment:
+      - GITHUB_TOKEN=${GITHUB_PAT}  # Inject read-only PAT
+      - TOOLSETS=context,issues,pull_requests,repos,notifications  # Limit to read-only toolsets
+    ports:
+      - "8080:8080"  # Expose the MCP API (adjust port if needed)
+    depends_on:
+      - unagi-dev  # Ensure it starts after the main dev container
+    platform: linux/arm64
