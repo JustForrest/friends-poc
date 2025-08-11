@@ -24,9 +24,9 @@
     }
   },
   "postCreateCommand": [
-    "pip install -r requirements.txt",
-    "echo '[extensions]' > /workspace/.goose/config.toml && echo 'github-mcp = true' >> /workspace/.goose/config.toml",
-    "echo '[github-mcp]' >> /workspace/.goose/config.toml && echo 'uri = \"http://mcp-github:3000\"' >> /workspace/.goose/config.toml && echo 'token = \"$GITHUB_PERSONAL_ACCESS_TOKEN\"' >> /workspace/.goose/config.toml",
-    "uname -m"
+  "pip install -r requirements.txt",
+  "echo '[extensions]' > /workspace/.goose/config.toml && echo 'github-mcp = true' >> /workspace/.goose/config.toml",
+  "echo '[github-mcp]' >> /workspace/.goose/config.toml && echo 'uri = \"http://mcp-github:3000\"' >> /workspace/.goose/config.toml && echo \"token = \\\"$GITHUB_PERSONAL_ACCESS_TOKEN\\\"\" >> /workspace/.goose/config.toml",
+  "uname -m"
   ]
 }

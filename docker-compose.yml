@@ -19,7 +19,10 @@ services:
     command: sleep infinity  # Keep container running for VS Code Remote
 
   mcp-github:  # New service for MCP server
-    image: mcp/github  # Built from the repo above
+    build:
+      context: ./mcp-server  # Path to cloned repo
+      dockerfile: src/github/Dockerfile  # From the repo's structure
+    image: mcp/github:local  # Tag it locally
     platform: linux/arm64
     environment:
       - GITHUB_PERSONAL_ACCESS_TOKEN="${MCP_PAT}"  # PAT for MCP
