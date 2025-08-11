@@ -1,0 +1,47 @@
+# .gooseignore - Patterns for Goose to ignore
+# Based on: https://block.github.io/goose/docs/guides/using-gooseignore
+# Ignores sensitive, artifacts, logs, and large/irrelevant files for the Unagi project
+
+# Sensitive files and secrets
+.env
+*.key
+*.pem
+secrets/
+config/secrets.toml
+
+# Build artifacts and dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.o
+*.so
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+tmp/
+
+# Git and Docker internals
+.git/
+.gitignore
+.dockerignore
+Dockerfile
+docker-compose.yml
+devcontainer.json
+
+# Large data files (e.g., embeddings, raw scripts)
+data/embeddings/
+data/scripts/raw/
+qdrant/storage/
+
+# Other ignores
+.idea/
+.vscode/ (except settings.json if needed)
+cache/
