@@ -8,7 +8,7 @@ services:
       - .:/workspace:cached  # Mount project for live editing
       - ~/.config:/home/user/.config  # For global configs (e.g., Goose memory)
     environment:
-      - GITHUB_PERSONAL_ACCESS_TOKEN=your_read_only_pat_here  # For Goose config
+      - GITHUB_PERSONAL_ACCESS_TOKEN="${UNAGI_DEV_PAT}"  # For Goose config
       - MCP_SERVER_URI=http://mcp-github:3000  # Point Goose to local MCP
     cap_drop:
       - ALL  # Security: Drop all capabilities
@@ -22,7 +22,7 @@ services:
     image: mcp/github  # Built from the repo above
     platform: linux/arm64
     environment:
-      - GITHUB_PERSONAL_ACCESS_TOKEN=your_read_only_pat_here  # PAT for MCP
+      - GITHUB_PERSONAL_ACCESS_TOKEN="${MCP_PAT}"  # PAT for MCP
       - PORT=3000  # Or whatever port the server uses (check README)
     healthcheck:  # Ensure it's ready
       test: ["CMD", "curl", "-f", "http://localhost:3000/health"]  # Adjust if needed
