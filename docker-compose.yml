@@ -2,25 +2,29 @@ version: '3.8'
 
 services:
   unagi-dev:
-    build:
-      context: .
-      dockerfile: Dockerfile  # Your existing Goose/Gemini CLI Dockerfile (python:3.11-slim base)
+    build: .
     volumes:
       - .:/workspace
     environment:
+      - GITHUB_TOKEN=${UNAGI_DEV_PAT}  # Read-only PAT
       - GOOSE_DEFAULT_PROVIDER=grok
-      - GITHUB_PAT=${GITHUB_PAT}  # Read-only PAT from your env
-    platform: linux/arm64  # Ensure native Apple Silicon performance
+    ports:
+      - "8000:8000"  # For Unagi app
+    depends_on:
+      - mcp-server
 
   mcp-server:
     build:
-      context: https://github.com/docker/mcp-servers.git
-      dockerfile: src/github/Dockerfile  # Assumes there's a Dockerfile in that path (based on repo structure)
+      context: https://github.com/modelcontextprotocol/servers.git#2025.4.24
+      dockerfile: src/github/Dockerfile
+    platform: linux/arm64  # For Apple Silicon
     environment:
-      - GITHUB_TOKEN=${GITHUB_PAT}  # Inject read-only PAT
-      - TOOLSETS=context,issues,pull_requests,repos,notifications  # Limit to read-only toolsets
+      - GITHUB_TOKEN=${MCP_PAT}  # Same read-only PAT
+      - TOOLSETS=context,issues,pull_requests,repos,notifications  # Limit to reads
+      - PORT=8080
     ports:
-      - "8080:8080"  # Expose the MCP API (adjust port if needed)
-    depends_on:
-      - unagi-dev  # Ensure it starts after the main dev container
-    platform: linux/arm64
+      - "8080:8080"
+    restart: unless-stopped
+
+volumes:
+  workspace: {}
