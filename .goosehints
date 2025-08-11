@@ -1,0 +1,51 @@
+# .goosehints - Hints for Goose in the Unagi Project
+
+project_overview: |
+This is the Unagi project, a RAG system based on Friends scripts. Use agent-first development with Goose for planning/recipes and Gemini CLI for executions/writes. All in containerized setup with VS Code Remote integration.
+
+delegation_rules: |
+
+- Goose (lead, Grok-4): Handle planning, reads (via MCP), recipes/sub-recipes for workflows.
+- Gemini CLI (worker): Delegate writes, modifications, executions via custom extensions or GitHub Actions.
+- Use read-only PATs for security; automate setups via postCreateCommand.
+- For GitHub operations, use Gemini CLI integrated with GitHub Actions (e.g., workflows for issue triage, PR reviews).
+
+coding_standards: |
+
+- Python: Use Ruff (line-length=88, double quotes, sorted imports).
+- JS/TS: Prettier for formatting, ESLint for linting.
+- YAML: redhat.vscode-yaml extension.
+- Structure: FastAPI backend, Next.js frontend, Qdrant vector DB.
+
+custom_commands: |
+
+- Gemini CLI with GitHub Actions for GitHub operations (e.g., automate triage/reviews via workflows).
+- Use Goose recipes for repeatable tasks like data ingestion.
+
+environment_hints: |
+
+- Arm64 native on Apple Silicon.
+- Containerized: Multi-service Docker Compose.
+- Env vars: PATs, API keys via postCreateCommand.
+
+recipes_and_sub_recipes: |
+Recipes are YAML/JSON files for reusable workflows. Use them for repeatable tasks like code gen or data processing.
+
+- Structure: version, title, description, instructions, prompt, parameters, extensions, settings, sub_recipes, retry, response (for structured output).
+- Parameters: Define required/optional/user_prompt; use {{ param }} in templates.
+- Sub-Recipes: Modular tasks called by main recipe (e.g., security scan then quality check).
+  - Fields: name, path, values (pre-set params), sequential_when_repeated (for parallel control).
+  - Examples: Sequential processing for code reviews; conditional based on project type.
+- Best Practices: Break complex tasks into sub-recipes; test independently; use indent() for multi-line params.
+- Automation: Add retry with shell checks; structured JSON output for scripting.
+- Monitoring for Recipe Candidates: Agents should actively monitor code, scripts, and workflows for repeatable patterns that could be converted into recipes or sub-recipes. Criteria: multi-step processes, parameterization needs, parallelism opportunities, retry logic, or automation potential (e.g., data ingestion scripts, testing sequences, deployment steps). When identified, summarize the candidate and suggest refactoring to the user for approval.
+
+goose_gemini_cli_integration: |
+Goose and Gemini CLI work together for agentic dev:
+
+- Goose (Lead): Planning, reads (MCP), recipes/sub-recipes for workflows (e.g., parallel tasks).
+- Gemini CLI (Worker): Writes/executions via tools (file system, shell, web fetch) with sandboxing/confirmations.
+- Setup: Use Goose CLI providers for Gemini integration; delegate via custom extensions or GitHub Actions.
+- Examples: Goose plans PR review recipe; delegates code changes to Gemini CLI.
+- GitHub Workflows: Use Gemini CLI with Actions for triage/reviews (e.g., @gemini-cli /review); Goose orchestrates via recipes.
+- Security: Read-only for Goose; confirmations/sandboxing in Gemini CLI.
