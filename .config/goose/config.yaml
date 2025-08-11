@@ -16,9 +16,9 @@ extensions:
 
 providers:
   mcp:
-    url: "http://mcp-server:8080" # Local MCP server in docker-compose (updated to match step 2 snippet)
-    token: "${GITHUB_PAT_MCP}" # Env var expansion for read-only PAT
-    toolsets: # Limited to reads (updated to match step 2 snippet)
+    url: "http://mcp-server:8080" # This should match the service name in docker-compose
+    token: "${MCP_PAT}" # Updated to match docker-compose env var name
+    toolsets:
       - context
       - issues
       - pull_requests
@@ -34,3 +34,4 @@ security:
 recipes:
   parallelism: true # Allow sub-recipes for concurrent tasks (e.g., data ingestion)
   default_path: "/workspace/recipes/" # Store recipes in project dir
+
