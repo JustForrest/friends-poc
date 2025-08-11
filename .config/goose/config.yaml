@@ -1,25 +1,36 @@
-# config.toml - Goose configuration for Unagi project
+# config.yaml - Goose configuration for Unagi project
 # Based on: https://block.github.io/goose/docs/guides/config-file
 # Generated automatically in container (e.g., via postCreateCommand)
-# Location: ~/.config/goose/config.toml (global) or project-local
+# Location: ~/.config/goose/config.yaml (global) or project-local
 
-[general]
-lead_model = "grok-4"  # xAI/OpenAI-compatible, for agentic workflows
-enable_recipes = true  # Enable YAML recipes with sub-recipes for parallelism
-auto_detect_recipes = true  # Suggest recipes for repeatable tasks
+general:
+  lead_model: "grok-4" # xAI/OpenAI-compatible, for agentic workflows
+  enable_recipes: true # Enable YAML recipes with sub-recipes for parallelism
+  auto_detect_recipes: true # Suggest recipes for repeatable tasks
 
-[extensions]
-enabled = ["developer", "memory", "github-mcp"]  # Builtins + MCP for GitHub reads
+extensions:
+  enabled:
+    - developer
+    - memory
+    - mcp # Builtins + MCP for GitHub reads (updated from github-mcp)
 
-[extensions.github-mcp]
-uri = "http://mcp-github:3000"  # Local MCP server in docker-compose
-token = "${GITHUB_PAT_MCP}"  # Env var expansion for read-only PAT
-toolset = ["context", "issues", "pull_requests", "repos", "notifications"]  # Limited to reads
+providers:
+  mcp:
+    url: "http://mcp-server:8080" # Local MCP server in docker-compose (updated to match step 2 snippet)
+    token: "${GITHUB_PAT_MCP}" # Env var expansion for read-only PAT
+    toolsets: # Limited to reads (updated to match step 2 snippet)
+      - context
+      - issues
+      - pull_requests
+      - repos
+      - notifications
 
-[security]
-read_only_mode = true  # Enforce read-only for GitHub interactions
-capability_drops = ["SYS_ADMIN", "NET_ADMIN"]  # Align with docker-compose caps
+security:
+  read_only_mode: true # Enforce read-only for GitHub interactions
+  capability_drops: # Align with docker-compose caps
+    - "SYS_ADMIN"
+    - "NET_ADMIN"
 
-[recipes]
-parallelism = true  # Allow sub-recipes for concurrent tasks (e.g., data ingestion)
-default_path = "/workspace/recipes/"  # Store recipes in project dir
+recipes:
+  parallelism: true # Allow sub-recipes for concurrent tasks (e.g., data ingestion)
+  default_path: "/workspace/recipes/" # Store recipes in project dir
